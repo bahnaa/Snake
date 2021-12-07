@@ -181,7 +181,6 @@ function checkCoords() {
 }
 
 function checkCrash() {
-  console.log('i\'m crash checkker');
   let result = false;
   const snakeBody = document.querySelectorAll(".game__snake-body");
   const coordsComparision = [];
