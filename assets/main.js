@@ -1,10 +1,14 @@
 const game = document.querySelector(".game");
 const snake = document.querySelector(".game__snake-head");
 
-const FRUIT_BARS = 5; // sets the number of bars snake gets after eating a fruit
+const FRUIT_BARS = 1; // sets the number of bars snake gets after eating a fruit
+const MOVE_SPEED = 200;
 
 let DistanceX = 60; // for further upgrade
 let DistanceY = 540; // for further upgrade
+const moveUnit = 60; // for further upgrade
+let snakeLenght = 2; // for further upgrade
+
 const idStorage = {
   intervalId: "",
   timeoutId: ""
@@ -16,9 +20,6 @@ const isRunning = {
   down: false,
 };
 
-const moveUnit = 60; // for further upgrade
-const moveSpeed = 500;
-let snakeLenght = 2; // for further upgrade
 
 function leftMove() {
   Object.keys(isRunning).forEach((run) => {
@@ -34,7 +35,7 @@ function leftMove() {
     snake.style.left = DistanceX + "px";
   }
   checkCoords();
-  setTimeout(checkCrash, moveSpeed/10);
+  setTimeout(checkCrash, MOVE_SPEED/10);
 }
 
 function rightMove() {
@@ -54,7 +55,7 @@ function rightMove() {
     snake.style.top = "540px";
   }
   checkCoords();
-  setTimeout(checkCrash, moveSpeed/10);
+  setTimeout(checkCrash, MOVE_SPEED/10);
 }
 
 function upMove() {
@@ -74,7 +75,7 @@ function upMove() {
     snake.style.left = "60px";
   }
   checkCoords();
-  setTimeout(checkCrash, moveSpeed/10);
+  setTimeout(checkCrash, MOVE_SPEED/10);
 }
 
 function downMove() {
@@ -94,7 +95,7 @@ function downMove() {
     snake.style.left = "60px";
   }
   checkCoords();
-  setTimeout(checkCrash, moveSpeed/10);
+  setTimeout(checkCrash, MOVE_SPEED/10);
 }
 
 function snakeMovement(e) {
@@ -105,7 +106,7 @@ function snakeMovement(e) {
     eyesDirectionChange("column");
     clearInterval(idStorage.intervalId);
     leftMove();
-    let intervalId = setInterval(leftMove, moveSpeed);
+    let intervalId = setInterval(leftMove, MOVE_SPEED);
     idStorage.intervalId = intervalId;
   } else if (e.keyCode === 38) {
     if (isRunning.down) {
@@ -114,7 +115,7 @@ function snakeMovement(e) {
     eyesDirectionChange("row");
     clearInterval(idStorage.intervalId);
     upMove();
-    let intervalId = setInterval(upMove, moveSpeed);
+    let intervalId = setInterval(upMove, MOVE_SPEED);
     idStorage.intervalId = intervalId;
   } else if (e.keyCode === 39) {
     if (isRunning.left) {
@@ -123,7 +124,7 @@ function snakeMovement(e) {
     eyesDirectionChange("column");
     clearInterval(idStorage.intervalId);
     rightMove();
-    let intervalId = setInterval(rightMove, moveSpeed);
+    let intervalId = setInterval(rightMove, MOVE_SPEED);
     idStorage.intervalId = intervalId;
   } else if (e.keyCode === 40) {
     if (isRunning.up) {
@@ -132,7 +133,7 @@ function snakeMovement(e) {
     eyesDirectionChange("row");
     clearInterval(idStorage.intervalId);
     downMove();
-    let intervalId = setInterval(downMove, moveSpeed);
+    let intervalId = setInterval(downMove, MOVE_SPEED);
     idStorage.intervalId = intervalId;
   }
 }
