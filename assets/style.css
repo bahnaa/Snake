@@ -66,3 +66,19 @@ body {
     position: absolute;
     z-index: 1;
 }
+
+.restart-button {
+    font-size: 2rem;
+    width: 20%;
+    height: 10%;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    color: white;
+    background-color: slateblue;
+}
+
+.restart-button:hover {
+    background-color: rgb(125, 112, 212);
+}

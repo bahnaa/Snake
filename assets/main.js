@@ -190,7 +190,13 @@ function checkCrash() {
   snakeBody.forEach((part) => {
     coords.push({ left: part.style.left, top: part.style.top });
   });
-  coords.forEach((coord) => {
+  const uniqueCoords = coords.reduce((arr, e) => {
+    if (!arr.find(item => item.left == e.left && item.top == e.top)) {
+      arr.push(e);
+    }
+    return arr;
+  }, []);
+  uniqueCoords.forEach((coord) => {
     if (
       coord.left == coordsComparision[0].left &&
       coord.top == coordsComparision[0].top
@@ -199,9 +205,19 @@ function checkCrash() {
       clearInterval(idStorage.intervalId);
       clearTimeout(idStorage.timeoutId);
       window.removeEventListener("keydown", snakeMovement);
-      // return location.reload();
+      createRestartButton();
     }
   });
+}
+
+function createRestartButton() {
+  const restartButton = document.createElement('button');
+  restartButton.innerText = 'Play again';
+  restartButton.classList.add('restart-button');
+  restartButton.addEventListener('click', () => {
+    location.reload();
+  })
+  document.body.insertBefore(restartButton, game);
 }
 
 function gameStart() {
