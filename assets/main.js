@@ -1,17 +1,22 @@
 const game = document.querySelector(".game");
 const snake = document.querySelector(".game__snake-head");
+const snakeFirstBodyPart = document.getElementById("b1");
 
 const FRUIT_BARS = 1; // sets the number of bars snake gets after eating a fruit
-const MOVE_SPEED = 200;
+const MOVE_SPEED = 200; // sets the speed of the snake
 
-let DistanceX = 60; // for further upgrade
-let DistanceY = 540; // for further upgrade
+// let DistanceX = 60; // for further upgrade
+// let DistanceY = 540; // for further upgrade
+
+let DistanceX = (Math.floor(Math.random() * (9 - 1)) + 1) * 60;
+let DistanceY = (Math.floor(Math.random() * (9 - 1)) + 1) * 60;
+
 const moveUnit = 60; // for further upgrade
 let snakeLenght = 2; // for further upgrade
 
 const idStorage = {
   intervalId: "",
-  timeoutId: ""
+  timeoutId: "",
 };
 const isRunning = {
   left: false,
@@ -19,7 +24,6 @@ const isRunning = {
   right: false,
   down: false,
 };
-
 
 function leftMove() {
   Object.keys(isRunning).forEach((run) => {
@@ -35,7 +39,7 @@ function leftMove() {
     snake.style.left = DistanceX + "px";
   }
   checkCoords();
-  setTimeout(checkCrash, MOVE_SPEED/10);
+  setTimeout(checkCrash, MOVE_SPEED / 10);
 }
 
 function rightMove() {
@@ -55,7 +59,7 @@ function rightMove() {
     snake.style.top = "540px";
   }
   checkCoords();
-  setTimeout(checkCrash, MOVE_SPEED/10);
+  setTimeout(checkCrash, MOVE_SPEED / 10);
 }
 
 function upMove() {
@@ -75,7 +79,7 @@ function upMove() {
     snake.style.left = "60px";
   }
   checkCoords();
-  setTimeout(checkCrash, MOVE_SPEED/10);
+  setTimeout(checkCrash, MOVE_SPEED / 10);
 }
 
 function downMove() {
@@ -95,7 +99,7 @@ function downMove() {
     snake.style.left = "60px";
   }
   checkCoords();
-  setTimeout(checkCrash, MOVE_SPEED/10);
+  setTimeout(checkCrash, MOVE_SPEED / 10);
 }
 
 function snakeMovement(e) {
@@ -168,15 +172,15 @@ function checkCoords() {
     snake.style.top === fruit.style.top
   ) {
     fruit.remove();
-    for(let i = 0; i<FRUIT_BARS; i++) {
-    const snakeBodyPart = document.createElement("div");
-    snakeBodyPart.classList.add("game__snake-body", "body-part");
-    const horizontalTail = game.lastElementChild.offsetLeft;
-    const verticalTail = game.lastElementChild.offsetTop;
-    snakeBodyPart.style.left = horizontalTail + "px";
-    snakeBodyPart.style.top = verticalTail + "px";
-    game.appendChild(snakeBodyPart);
-    snakeLenght++;
+    for (let i = 0; i < FRUIT_BARS; i++) {
+      const snakeBodyPart = document.createElement("div");
+      snakeBodyPart.classList.add("game__snake-body", "body-part");
+      const horizontalTail = game.lastElementChild.offsetLeft;
+      const verticalTail = game.lastElementChild.offsetTop;
+      snakeBodyPart.style.left = horizontalTail + "px";
+      snakeBodyPart.style.top = verticalTail + "px";
+      game.appendChild(snakeBodyPart);
+      snakeLenght++;
     }
     const timeoutId = setTimeout(fruitSpawn, 1000);
     idStorage.timeoutId = timeoutId;
@@ -192,7 +196,7 @@ function checkCrash() {
     coords.push({ left: part.style.left, top: part.style.top });
   });
   const uniqueCoords = coords.reduce((arr, e) => {
-    if (!arr.find(item => item.left == e.left && item.top == e.top)) {
+    if (!arr.find((item) => item.left == e.left && item.top == e.top)) {
       arr.push(e);
     }
     return arr;
@@ -212,17 +216,44 @@ function checkCrash() {
 }
 
 function createRestartButton() {
-  const restartButton = document.createElement('button');
-  restartButton.innerText = 'Play again';
-  restartButton.classList.add('restart-button');
-  restartButton.addEventListener('click', () => {
+  const restartButton = document.createElement("button");
+  restartButton.innerText = "Play again";
+  restartButton.classList.add("restart-button");
+  restartButton.addEventListener("click", () => {
     location.reload();
-  })
+  });
   document.body.insertBefore(restartButton, game);
 }
 
 function gameStart() {
+  setStartCoords();
   setTimeout(fruitSpawn, 2000);
+}
+
+function setStartCoords() {
+  snake.style.left = DistanceX + "px";
+  snake.style.top = DistanceY + "px";
+  const location = ["X", "Y"];
+  const side = [-60, 60];
+  const locationRandom = location[Math.round(Math.random())];
+  const sideRandom = side[Math.round(Math.random())];
+  if (locationRandom === "Y") {
+    eyesDirectionChange('row');
+    snakeFirstBodyPart.style.left = DistanceX + "px";
+    if (side === -60) {
+      snakeFirstBodyPart.style.top = DistanceY - 60 + "px";
+    } else {
+      snakeFirstBodyPart.style.top = DistanceY + 60 + "px";
+    }
+  } else {
+    snakeFirstBodyPart.style.top = DistanceY + "px";
+    if (sideRandom === -60) {
+      snakeFirstBodyPart.style.left = DistanceX - 60 + "px";
+    } else {
+      snakeFirstBodyPart.style.left = DistanceX + 60 + "px";
+    }
+  }
+  console.log(locationRandom);
 }
 
 window.addEventListener("keydown", snakeMovement);
