@@ -2,7 +2,7 @@ const game = document.querySelector(".game");
 const snake = document.querySelector(".game__snake-head");
 const snakeFirstBodyPart = document.getElementById("b1");
 
-const FRUIT_BARS = 1; // sets the number of bars snake gets after eating a fruit
+const FRUIT_BARS = 5; // sets the number of bars snake gets after eating a fruit
 const MOVE_SPEED = 200; // sets the speed of the snake
 
 // let DistanceX = 60; // for further upgrade
@@ -195,13 +195,26 @@ function checkCrash() {
   snakeBody.forEach((part) => {
     coords.push({ left: part.style.left, top: part.style.top });
   });
-  const uniqueCoords = coords.reduce((arr, e) => {
-    if (!arr.find((item) => item.left == e.left && item.top == e.top)) {
-      arr.push(e);
+  // const uniqueCoords = coords.reduce((arr, e) => {
+  //   if (!arr.find((item) => item.left == e.left && item.top == e.top)) {
+  //     arr.push(e);
+  //   }
+  //   return arr;
+  // }, []);
+
+  const filteredCoords = coords.reduce((p, c) => {
+    if (p.length === 0) {
+      p.push(c);
+    } else if (p[p.length-1].left !== c.left || p[p.length-1].top !== c.top) {
+      p.push(c);
     }
-    return arr;
+    return p;
   }, []);
-  uniqueCoords.forEach((coord) => {
+  
+console.log(coords);
+console.log(filteredCoords);
+
+  filteredCoords.forEach((coord) => {
     if (
       coord.left == coordsComparision[0].left &&
       coord.top == coordsComparision[0].top
