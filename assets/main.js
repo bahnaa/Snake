@@ -2,8 +2,8 @@ const game = document.querySelector(".game");
 const snake = document.querySelector(".game__snake-head");
 const snakeFirstBodyPart = document.getElementById("b1");
 
-const FRUIT_BARS = 5; // sets the number of bars snake gets after eating a fruit
-const MOVE_SPEED = 200; // sets the speed of the snake
+const FRUIT_BARS = 1; // sets the number of bars snake gets after eating a fruit
+const MOVE_SPEED = 300; // sets the speed of the snake
 
 // let DistanceX = 60; // for further upgrade
 // let DistanceY = 540; // for further upgrade
@@ -211,8 +211,8 @@ function checkCrash() {
     return p;
   }, []);
   
-console.log(coords);
-console.log(filteredCoords);
+// console.log(coords);
+// console.log(filteredCoords);
 
   filteredCoords.forEach((coord) => {
     if (
