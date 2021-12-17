@@ -2,12 +2,6 @@ const game = document.querySelector(".game");
 const snake = document.querySelector(".game__snake-head");
 const snakeFirstBodyPart = document.getElementById("b1");
 
-const FRUIT_BARS = 1; // sets the number of bars snake gets after eating a fruit
-const MOVE_SPEED = 300; // sets the speed of the snake
-
-// let DistanceX = 60; // for further upgrade
-// let DistanceY = 540; // for further upgrade
-
 let DistanceX = (Math.floor(Math.random() * (9 - 1)) + 1) * 60;
 let DistanceY = (Math.floor(Math.random() * (9 - 1)) + 1) * 60;
 
@@ -239,6 +233,9 @@ function createRestartButton() {
 }
 
 function gameStart() {
+  const settingsScript = document.createElement('script');
+  settingsScript.src = '/assets/settings.js';
+  document.head.append(settingsScript);
   setStartCoords();
   setTimeout(fruitSpawn, 2000);
 }
